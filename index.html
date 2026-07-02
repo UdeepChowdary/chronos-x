@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore temporal loops across 1500, 1983, 2099, and 3026 using this interactive era-shifting time machine dashboard with procedural audio synthesis.">
+    <title>RetroFuture Time Machine</title>
+    <!-- Google Fonts for Era-specific typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Homemade+Apple&family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;600&family=Press+Start+2P&family=Space+Grotesk:wght@300;400;600&family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-1983">
+    <!-- Visual Effect Overlays -->
+    <div class="vhs-scanlines"></div>
+    <div class="screen-flicker"></div>
+    <div class="paper-texture"></div>
+    <div class="noise-overlay"></div>
+
+    <div class="time-machine-container">
+        <!-- HEADER & TIMELINE DIAL -->
+        <header class="timeline-header">
+            <div class="logo-area">
+                <span class="logo-sub">TEMPORAL NAVIGATION CONSOLE</span>
+                <h1 class="logo-main">CHRONOS-X</h1>
+            </div>
+            
+            <div class="timeline-slider-wrapper">
+                <div class="timeline-track">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-node active" data-era="1500" style="left: 0%;">
+                        <span class="node-year">1500</span>
+                        <span class="node-label">RENAISSANCE</span>
+                    </div>
+                    <div class="timeline-node" data-era="1983" style="left: 33.33%;">
+                        <span class="node-year">1983</span>
+                        <span class="node-label">SYNTHWAVE</span>
+                    </div>
+                    <div class="timeline-node" data-era="2099" style="left: 66.66%;">
+                        <span class="node-year">2099</span>
+                        <span class="node-label">CYBERPUNK</span>
+                    </div>
+                    <div class="timeline-node" data-era="3026" style="left: 100%;">
+                        <span class="node-year">3026</span>
+                        <span class="node-label">HYPERSPACE</span>
+                    </div>
+                    <div class="timeline-handle" id="timelineHandle"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <main class="dashboard-grid">
+            <!-- LEFT PANEL: TELEMETRY & AUDIO -->
+            <section class="left-panel dashboard-card">
+                <div class="card-header">
+                    <h2>SYSTEM CONTROLS</h2>
+                    <span class="indicator">ONLINE</span>
+                </div>
+                
+                <div class="audio-control-deck">
+                    <h3>AMBIE-SYNTHESIZER</h3>
+                    <div class="ambient-visualizer" id="ambientVisualizer">
+                        <!-- Bar visualizer divs generated in JS -->
+                        <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                        <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                        <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                    </div>
+                    <div class="control-row">
+                        <button class="btn btn-audio" id="audioToggle">
+                            <span class="btn-icon">▶</span> <span class="btn-text">START AUDIO</span>
+                        </button>
+                        <div class="slider-group">
+                            <label for="volumeSlider">VOLUME</label>
+                            <input type="range" id="volumeSlider" min="0" max="100" value="50" class="input-slider">
+                        </div>
+                    </div>
+                    <div class="sfx-options">
+                        <label class="toggle-container">
+                            <input type="checkbox" id="sfxToggle" checked>
+                            <span class="checkmark"></span>
+                            INTERFACE SFX
+                        </label>
+                    </div>
+                </div>
+
+                <div class="telemetry-info">
+                    <h3>CHRONO-COORDINATES</h3>
+                    <div class="telemetry-stats">
+                        <div class="stat-box">
+                            <span class="stat-label">TEMPORAL DEPTH</span>
+                            <span class="stat-val" id="depthVal">-417.4 Yrs</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">FLUX VELOCITY</span>
+                            <span class="stat-val" id="fluxVal">88.0 MPH</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">SINGULARITY CORES</span>
+                            <span class="stat-val" id="coreVal">STABLE</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CENTRAL PANEL: ACTIVE ERA GADGET -->
+            <section class="center-panel dashboard-card">
+                <div class="card-header">
+                    <h2 id="gadgetTitle">ACTIVE INTERACTIVE WIDGET</h2>
+                    <span class="era-tag" id="eraTag">ERA: 1983</span>
+                </div>
+                
+                <!-- GADGET VIEWPORTS (Only one visible at a time) -->
+                <div class="gadget-viewport">
+                    
+                    <!-- 1500: Da Vinci Mechanical Gear Calculator -->
+                    <div class="gadget-wrapper" id="gadget-1500">
+                        <p class="gadget-desc">Spin the Leonardo wheel crank to transfer mechanical torque and compute spatial trajectory ratios.</p>
+                        <div class="gear-canvas-container">
+                            <canvas id="gearCanvas" width="500" height="350"></canvas>
+                        </div>
+                        <div class="gadget-controls">
+                            <div class="slider-group crank-group">
+                                <label for="crankSlider">CRANK ROTATION</label>
+                                <input type="range" id="crankSlider" min="0" max="360" value="0" class="input-slider">
+                            </div>
+                            <button class="btn btn-action" id="resetGearsBtn">ALIGN ROTORS</button>
+                        </div>
+                    </div>
+
+                    <!-- 1983: Vaporwave Sequencer Grid -->
+                    <div class="gadget-wrapper" id="gadget-1983">
+                        <p class="gadget-desc">Compose synth loops on the 8x8 matrix. The laser line triggers frequencies in sequence.</p>
+                        <div class="sequencer-grid" id="sequencerGrid">
+                            <!-- JS will generate an 8x8 grid of pads -->
+                        </div>
+                        <div class="gadget-controls">
+                            <button class="btn btn-action" id="sequencerPlayBtn">PLAY SEQUENCE</button>
+                            <button class="btn btn-action" id="sequencerClearBtn">CLEAR GRID</button>
+                            <div class="slider-group">
+                                <label for="tempoSlider">TEMPO (BPM)</label>
+                                <input type="range" id="tempoSlider" min="60" max="200" value="120" class="input-slider">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2099: Cyberpunk Decryptor Firewall -->
+                    <div class="gadget-wrapper" id="gadget-2099">
+                        <p class="gadget-desc">Locate and neutralize the destabilized code node (highlighted neon glitch) before the firewall trace hits 100%.</p>
+                        <div class="cyber-terminal">
+                            <div class="cyber-hud">
+                                <span>FIREWALL TRACE: <span id="tracePercent">0%</span></span>
+                                <div class="trace-bar-bg"><div class="trace-bar-fill" id="traceBar"></div></div>
+                            </div>
+                            <div class="terminal-grid" id="terminalGrid">
+                                <!-- JS will populate with glitched hex cells -->
+                            </div>
+                        </div>
+                        <div class="gadget-controls">
+                            <button class="btn btn-action" id="bypassBtn">REFRESH GRID</button>
+                            <span class="cyber-status-text" id="cyberStatus">READY FOR BYPASS</span>
+                        </div>
+                    </div>
+
+                    <!-- 3026: Star Navigation Celestial Plotter -->
+                    <div class="gadget-wrapper" id="gadget-3026">
+                        <p class="gadget-desc">Drag the celestial dome to rotate the star coordinates, click stars to lock target trajectory, and initiate jump speed.</p>
+                        <div class="star-canvas-container">
+                            <canvas id="starCanvas" width="500" height="300"></canvas>
+                        </div>
+                        <div class="gadget-controls hyperspace-controls">
+                            <button class="btn btn-action btn-warp" id="warpBtn">INITIATE HYPER-WARP</button>
+                            <div class="target-readout">
+                                <span class="readout-label">LOCKED CONST.:</span>
+                                <span class="readout-val" id="targetStar">ALPHA CENTAURI IV</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL: NARRATIVE LOGS -->
+            <section class="right-panel dashboard-card">
+                <div class="card-header">
+                    <h2>TELEMETRY CONSOLE</h2>
+                    <span class="console-cursor">█</span>
+                </div>
+                <div class="console-body" id="consoleBody">
+                    <!-- Logs will print dynamically here -->
+                    <div class="console-line text-system">[SYSTEM]: Temporal engine idle. Awaiting era coordinates selection...</div>
+                </div>
+            </section>
+        </main>
+
+        <!-- FOOTER BAR -->
+        <footer class="system-footer">
+            <span class="footer-stat">FLUX CAPACITOR TEMPERATURE: 288 K</span>
+            <span class="footer-sep">|</span>
+            <span class="footer-stat">TIME VECTOR: STABLE</span>
+            <span class="footer-sep">|</span>
+            <span class="footer-stat">&copy; 2026 CHRONOS LABS INC.</span>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="audio.js"></script>
+    <script src="gadgets.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
